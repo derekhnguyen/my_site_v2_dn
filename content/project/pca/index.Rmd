@@ -1,0 +1,96 @@
+---
+title: "Principal Component Analysis"
+author: "Derek Nguyen"
+date: "2020-02-04"
+output: html_document
+tags:
+  - statistical
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+
+library(tidyverse)
+library(tidyr)
+library(janitor)
+library(ggfortify)
+library(here)
+```
+
+
+### Introduction 
+
+Here we explore the a dataset provided by, *[Google Earth Engine](https://developers.google.com/earth-engine/datasets/catalog)*, that provides various environmental and climatic data on countries throughout the world. For this particular project, variables observed are: annual mean temperature, annual mean rainfall, accessibility to cities, tree canopy cover, cloudiness, elevation, and cropland cover.  
+
+```{r, warning = FALSE, message = FALSE}
+world_env <- read_csv(here::here("csv", "world_env_vars.csv"))
+```
+
+```{r, warning = FALSE, message = FALSE}
+world_env_tidy <- world_env %>% 
+  clean_names() %>% 
+  select(cropland_cover,
+         tree_canopy_cover, 
+         accessibility_to_cities, 
+         elevation, 
+         rain_mean_annual,
+         temp_mean_annual,
+         cloudiness) %>% 
+  drop_na()
+  
+```
+
+```{r}
+
+world_env_pca <- prcomp(world_env_tidy, scale = TRUE)
+```
+
+```{r, message = FALSE, echo = FALSE }
+
+
+world_env_biplot <- autoplot(world_env_pca,
+                             colour = NA,
+                             loadings.label = TRUE,
+                             loadings.label.size = 3,
+                             loadings.label.colour = "black",
+                             loadings.label.repel = TRUE) +
+  theme_minimal() + 
+  scale_y_continuous(limits = c(-.2, .2)) +
+  labs(title = "PCA of Country-Level Environmental and Climatic Variables")
+
+world_env_biplot
+```
+
+
+
+### Summary
+- Mean annual rainfall and tree canopy cover is most positively correlated. This correlation makes sense because rainfall provides nutrients for trees and tree canopy cover would grow. 
+- Mean annual rainfall is also positively correlated with cloudiness. This seems valid because cloudy days mean higher potential for rainfall. 
+- Mean annual temperature and cropland cover are inversely correlated. 
+- Mean annual temperature and elevation are inversely correlated. This makes sense because as elevation increases, temperature goes down and vice versa.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

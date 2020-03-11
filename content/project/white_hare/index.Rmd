@@ -1,0 +1,192 @@
+---
+title: "Snowshoe Hare Population Analysis"
+author: "Derek Nguyen"
+date: "2020-02-03"
+output: html_document
+---
+
+```{r setup, include=FALSE, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(tidyverse)
+library(janitor)
+library(tidyr)
+library(ggbeeswarm)
+library(car)
+library(kableExtra)
+library(here)
+```
+
+## Introduction
+
+
+![](https://nationalpostcom.files.wordpress.com/2019/01/es_jackrabbit_2.jpg?w=640&quality=60&strip=all)
+***Figure 1: Snowshoe Hare 'Lepus americanus'.*** *Getting lost in the eyes of a Snowshoe Hare. (Credit: [National Post])(https://nationalpost.com/news/canada/adorable-snowshoe-hares-found-to-routinely-feast-on-their-own-dead-study)*
+
+
+
+
+## Data and Methods
+
+```{r, include = FALSE}
+snowshoe_raw <- read_csv(here::here("csv" ,"showshoe_lter.csv") )
+```
+
+```{r}
+snowshoe_tidy <- snowshoe_raw %>% 
+
+ clean_names() %>% 
+  mutate(sex = str_to_lower(sex)) %>% 
+  mutate(age = str_to_lower(age)) 
+```
+
+
+ 
+
+
+SEX
+```{r, warning= FALSE}
+snowshoe_sex <- snowshoe_tidy %>% 
+  select(date, sex, weight) %>% 
+  filter(sex %in% c("f", "m")) %>% 
+  group_by(sex) %>% 
+  drop_na()
+
+summary_sex <- snowshoe_sex %>% 
+  summarize(mean_weight = mean(weight, na.rm = TRUE),
+            sd_weight = sd(weight, na.rm = TRUE),
+            standard_error = (sd(weight)/sqrt(length(weight))),
+            sample_size = n())
+            
+
+
+ggplot(data = summary_sex, aes(x = sex, y = mean_weight)) +
+  geom_beeswarm(data = snowshoe_sex, 
+                aes(x = sex, 
+                    y = weight, 
+                    color = sex), 
+                show.legend = FALSE,
+                size = 1,
+                alpha = 0.5) +
+  geom_errorbar(data = summary_sex, 
+                aes(ymin = mean_weight - sd_weight,
+                    ymax = mean_weight + sd_weight),
+                width = 0.2,
+                color = "firebrick") +
+  geom_point(data = summary_sex,
+             aes(x = sex,
+                 y = mean_weight)) +
+  labs(x = "Sex",
+       y = "Mean Weight (grams)") +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_x_discrete(labels = c("Female", "Male")) +
+  theme_minimal()
+```
+
+```{r,  warning= FALSE}
+table_sex <- summary_sex %>% 
+  mutate(sex = case_when(
+    sex == "f" ~ "Female",
+    sex == "m" ~ "Male"
+  )) %>% 
+  mutate_if(is.numeric, round, 2)
+  
+
+  kable(table_sex, col.names = c("Sex", "Mean Weight", "SD Weight", "Standard Error", "Sample Size")) %>% 
+  kable_styling(bootstrap_options = "striped",
+                full_width = F,
+                position = "center") %>% 
+  row_spec(c(1:2),
+           color = "navy") %>% 
+    add_header_above(c("Snowshoe Hare Sex Metrics" = 5))
+```
+
+
+
+
+
+
+Graph AGE
+
+```{r, warning = FALSE}
+snowshoe_age <- snowshoe_tidy %>% 
+  select(age, weight, date) %>% 
+  filter(age %in% c("j", "a", "m")) %>% 
+  group_by(age) %>% 
+  drop_na()
+
+summary_age <- snowshoe_age %>% 
+  summarize(mean_weight = mean(weight, na.rm = TRUE),
+            sd_weight = sd(weight, na.rm = TRUE),
+            standard_error = (sd(weight)/sqrt(length(weight))),
+            sample_size = n()) %>% 
+  mutate_if(is.numeric, round, 2)
+
+ggplot(summary_age, aes(x = age, y = mean_weight)) +
+  geom_beeswarm(data = snowshoe_age, 
+                aes(x = age, 
+                    y = weight, 
+                    color = age), 
+                show.legend = FALSE,
+                size = 1,
+                alpha = 0.5) +
+  geom_errorbar(data = summary_age, 
+                aes(ymin = mean_weight - sd_weight,
+                    ymax = mean_weight + sd_weight),
+                width = 0.2,
+                color = "firebrick") +
+  geom_point(data = summary_age,
+             aes(x = age,
+                 y = mean_weight)) +
+  labs(x = "Age",
+       y = "Mean Weight (grams)") +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_x_discrete(labels = c("Adult", "Juvenile")) +
+  theme_minimal()
+```
+
+
+```{r, warning=FALSE}
+table_age <- summary_age %>% 
+  mutate(age = case_when(
+    age == "a" ~ "Adult",
+    age == "j" ~ "Juvenile"
+  ))
+
+  kable(table_age, col.names = c("Age", "Mean Weight", "SD Weight", "Standard Error", "Sample Size")) %>% 
+  kable_styling(bootstrap_options = "striped",
+                full_width = F,
+                position = "center") %>% 
+  row_spec(c(1:2),
+           color = "navy") %>% 
+    add_header_above(c("Snowshow Hare Age Metrics" = 5)) 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

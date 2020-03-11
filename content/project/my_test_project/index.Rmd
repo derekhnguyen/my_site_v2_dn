@@ -1,0 +1,85 @@
+---
+title: "Watersheds of Hawaiian Islands"
+author: "Derek Nguyen"
+date: "2020-03-10"
+output: html_document
+tags:
+  - spatial
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE)
+```
+
+```{r}
+library(sf)
+library(tmap)
+library(tmaptools)
+
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+
+
+```{r}
+# land_use_cover <- read_sf(dsn = here::here("csv", "Land_Use_Land_Cover"), 
+#                           layer = "Land_Use_Land_Cover_LULC") %>% 
+#   clean_names() %>% 
+#   select(-objectid, -perimeter, -hawaiistgr)
+
+watersheds <- read_sf(dsn = here::here("csv", "Watersheds"), 
+                      layer = "Watersheds") %>% 
+  clean_names() %>% 
+  select(-objectid) %>% 
+  rename(watershed_name = wuname)
+```
+
+
+```{r}
+#st_crs(land_use_cover)
+```
+
+
+```{r}
+hawaii_interactive <-
+  tm_basemap("Esri.WorldImagery") +
+  tm_shape(watersheds) +
+  tm_fill("watershed_name", palette = c("-Blues"), legend.show = FALSE) +
+  tm_borders(col = "gray60", lwd = 1, lty = "solid", alpha = .5) +
+  #tm_shape(land_use_cover) +
+  #tm_fill("landcover", palette = c("firebrick", "green", "yellow"), alpha = 0.5) +
+  #tm_layout(title = "Watersheds and Land Covers of Hawaii") +
+  tm_style("natural")
+
+tmap_mode("plot")
+hawaii_interactive
+```
+
+***Figure 1: Watershed Units and Land Cover Types in Hawaii.*** Data: [Geoportal](http://geoportal.hawaii.gov/datasets/watersheds)
+
+The interactive map above displays the layers: Watershed Units. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,252 @@
+---
+title: "Snowshoe Hare Population Analysis"
+author: "Derek Nguyen"
+date: "2020-02-03"
+output: html_document
+---
+
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p><img src="https://nationalpostcom.files.wordpress.com/2019/01/es_jackrabbit_2.jpg?w=640&amp;quality=60&amp;strip=all" />
+<strong><em>Figure 1: Snowshoe Hare ‘Lepus americanus’.</em></strong> <em>Getting lost in the eyes of a Snowshoe Hare. (Credit: [National Post])(<a href="https://nationalpost.com/news/canada/adorable-snowshoe-hares-found-to-routinely-feast-on-their-own-dead-study" class="uri">https://nationalpost.com/news/canada/adorable-snowshoe-hares-found-to-routinely-feast-on-their-own-dead-study</a>)</em></p>
+</div>
+<div id="data-and-methods" class="section level2">
+<h2>Data and Methods</h2>
+<pre class="r"><code>snowshoe_tidy &lt;- snowshoe_raw %&gt;% 
+
+ clean_names() %&gt;% 
+  mutate(sex = str_to_lower(sex)) %&gt;% 
+  mutate(age = str_to_lower(age)) </code></pre>
+<p>SEX</p>
+<pre class="r"><code>snowshoe_sex &lt;- snowshoe_tidy %&gt;% 
+  select(date, sex, weight) %&gt;% 
+  filter(sex %in% c(&quot;f&quot;, &quot;m&quot;)) %&gt;% 
+  group_by(sex) %&gt;% 
+  drop_na()
+
+summary_sex &lt;- snowshoe_sex %&gt;% 
+  summarize(mean_weight = mean(weight, na.rm = TRUE),
+            sd_weight = sd(weight, na.rm = TRUE),
+            standard_error = (sd(weight)/sqrt(length(weight))),
+            sample_size = n())
+            
+
+
+ggplot(data = summary_sex, aes(x = sex, y = mean_weight)) +
+  geom_beeswarm(data = snowshoe_sex, 
+                aes(x = sex, 
+                    y = weight, 
+                    color = sex), 
+                show.legend = FALSE,
+                size = 1,
+                alpha = 0.5) +
+  geom_errorbar(data = summary_sex, 
+                aes(ymin = mean_weight - sd_weight,
+                    ymax = mean_weight + sd_weight),
+                width = 0.2,
+                color = &quot;firebrick&quot;) +
+  geom_point(data = summary_sex,
+             aes(x = sex,
+                 y = mean_weight)) +
+  labs(x = &quot;Sex&quot;,
+       y = &quot;Mean Weight (grams)&quot;) +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_x_discrete(labels = c(&quot;Female&quot;, &quot;Male&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="/project/white_hare/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>table_sex &lt;- summary_sex %&gt;% 
+  mutate(sex = case_when(
+    sex == &quot;f&quot; ~ &quot;Female&quot;,
+    sex == &quot;m&quot; ~ &quot;Male&quot;
+  )) %&gt;% 
+  mutate_if(is.numeric, round, 2)
+  
+
+  kable(table_sex, col.names = c(&quot;Sex&quot;, &quot;Mean Weight&quot;, &quot;SD Weight&quot;, &quot;Standard Error&quot;, &quot;Sample Size&quot;)) %&gt;% 
+  kable_styling(bootstrap_options = &quot;striped&quot;,
+                full_width = F,
+                position = &quot;center&quot;) %&gt;% 
+  row_spec(c(1:2),
+           color = &quot;navy&quot;) %&gt;% 
+    add_header_above(c(&quot;Snowshoe Hare Sex Metrics&quot; = 5))</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Snowshoe Hare Sex Metrics
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Sex
+</th>
+<th style="text-align:right;">
+Mean Weight
+</th>
+<th style="text-align:right;">
+SD Weight
+</th>
+<th style="text-align:right;">
+Standard Error
+</th>
+<th style="text-align:right;">
+Sample Size
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;color: navy !important;">
+Female
+</td>
+<td style="text-align:right;color: navy !important;">
+1365.16
+</td>
+<td style="text-align:right;color: navy !important;">
+347.45
+</td>
+<td style="text-align:right;color: navy !important;">
+8.94
+</td>
+<td style="text-align:right;color: navy !important;">
+1511
+</td>
+</tr>
+<tr>
+<td style="text-align:left;color: navy !important;">
+Male
+</td>
+<td style="text-align:right;color: navy !important;">
+1349.94
+</td>
+<td style="text-align:right;color: navy !important;">
+305.73
+</td>
+<td style="text-align:right;color: navy !important;">
+9.15
+</td>
+<td style="text-align:right;color: navy !important;">
+1117
+</td>
+</tr>
+</tbody>
+</table>
+<p>Graph AGE</p>
+<pre class="r"><code>snowshoe_age &lt;- snowshoe_tidy %&gt;% 
+  select(age, weight, date) %&gt;% 
+  filter(age %in% c(&quot;j&quot;, &quot;a&quot;, &quot;m&quot;)) %&gt;% 
+  group_by(age) %&gt;% 
+  drop_na()
+
+summary_age &lt;- snowshoe_age %&gt;% 
+  summarize(mean_weight = mean(weight, na.rm = TRUE),
+            sd_weight = sd(weight, na.rm = TRUE),
+            standard_error = (sd(weight)/sqrt(length(weight))),
+            sample_size = n()) %&gt;% 
+  mutate_if(is.numeric, round, 2)
+
+ggplot(summary_age, aes(x = age, y = mean_weight)) +
+  geom_beeswarm(data = snowshoe_age, 
+                aes(x = age, 
+                    y = weight, 
+                    color = age), 
+                show.legend = FALSE,
+                size = 1,
+                alpha = 0.5) +
+  geom_errorbar(data = summary_age, 
+                aes(ymin = mean_weight - sd_weight,
+                    ymax = mean_weight + sd_weight),
+                width = 0.2,
+                color = &quot;firebrick&quot;) +
+  geom_point(data = summary_age,
+             aes(x = age,
+                 y = mean_weight)) +
+  labs(x = &quot;Age&quot;,
+       y = &quot;Mean Weight (grams)&quot;) +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_x_discrete(labels = c(&quot;Adult&quot;, &quot;Juvenile&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="/project/white_hare/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>table_age &lt;- summary_age %&gt;% 
+  mutate(age = case_when(
+    age == &quot;a&quot; ~ &quot;Adult&quot;,
+    age == &quot;j&quot; ~ &quot;Juvenile&quot;
+  ))
+
+  kable(table_age, col.names = c(&quot;Age&quot;, &quot;Mean Weight&quot;, &quot;SD Weight&quot;, &quot;Standard Error&quot;, &quot;Sample Size&quot;)) %&gt;% 
+  kable_styling(bootstrap_options = &quot;striped&quot;,
+                full_width = F,
+                position = &quot;center&quot;) %&gt;% 
+  row_spec(c(1:2),
+           color = &quot;navy&quot;) %&gt;% 
+    add_header_above(c(&quot;Snowshow Hare Age Metrics&quot; = 5)) </code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="5">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Snowshow Hare Age Metrics
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+Age
+</th>
+<th style="text-align:right;">
+Mean Weight
+</th>
+<th style="text-align:right;">
+SD Weight
+</th>
+<th style="text-align:right;">
+Standard Error
+</th>
+<th style="text-align:right;">
+Sample Size
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;color: navy !important;">
+Adult
+</td>
+<td style="text-align:right;color: navy !important;">
+1494.65
+</td>
+<td style="text-align:right;color: navy !important;">
+238.18
+</td>
+<td style="text-align:right;color: navy !important;">
+8.96
+</td>
+<td style="text-align:right;color: navy !important;">
+707
+</td>
+</tr>
+<tr>
+<td style="text-align:left;color: navy !important;">
+Juvenile
+</td>
+<td style="text-align:right;color: navy !important;">
+869.79
+</td>
+<td style="text-align:right;color: navy !important;">
+326.94
+</td>
+<td style="text-align:right;color: navy !important;">
+16.60
+</td>
+<td style="text-align:right;color: navy !important;">
+388
+</td>
+</tr>
+</tbody>
+</table>
+</div>

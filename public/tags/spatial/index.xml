@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>spatial | Derek Nguyen&#39;s Website</title>
+    <link>/tags/spatial/</link>
+      <atom:link href="/tags/spatial/index.xml" rel="self" type="application/rss+xml" />
+    <description>spatial</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 10 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>spatial</title>
+      <link>/tags/spatial/</link>
+    </image>
+    
+    <item>
+      <title>Watersheds of Hawaiian Islands</title>
+      <link>/project/my_test_project/</link>
+      <pubDate>Tue, 10 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/project/my_test_project/</guid>
+      <description>
+
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(sf)
+library(tmap)
+library(tmaptools)
+
+library(tidyverse)
+library(here)
+library(janitor)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# land_use_cover &amp;lt;- read_sf(dsn = here::here(&amp;quot;csv&amp;quot;, &amp;quot;Land_Use_Land_Cover&amp;quot;), 
+#                           layer = &amp;quot;Land_Use_Land_Cover_LULC&amp;quot;) %&amp;gt;% 
+#   clean_names() %&amp;gt;% 
+#   select(-objectid, -perimeter, -hawaiistgr)
+
+watersheds &amp;lt;- read_sf(dsn = here::here(&amp;quot;csv&amp;quot;, &amp;quot;Watersheds&amp;quot;), 
+                      layer = &amp;quot;Watersheds&amp;quot;) %&amp;gt;% 
+  clean_names() %&amp;gt;% 
+  select(-objectid) %&amp;gt;% 
+  rename(watershed_name = wuname)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#st_crs(land_use_cover)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hawaii_interactive &amp;lt;-
+  tm_basemap(&amp;quot;Esri.WorldImagery&amp;quot;) +
+  tm_shape(watersheds) +
+  tm_fill(&amp;quot;watershed_name&amp;quot;, palette = c(&amp;quot;-Blues&amp;quot;), legend.show = FALSE) +
+  tm_borders(col = &amp;quot;gray60&amp;quot;, lwd = 1, lty = &amp;quot;solid&amp;quot;, alpha = .5) +
+  #tm_shape(land_use_cover) +
+  #tm_fill(&amp;quot;landcover&amp;quot;, palette = c(&amp;quot;firebrick&amp;quot;, &amp;quot;green&amp;quot;, &amp;quot;yellow&amp;quot;), alpha = 0.5) +
+  #tm_layout(title = &amp;quot;Watersheds and Land Covers of Hawaii&amp;quot;) +
+  tm_style(&amp;quot;natural&amp;quot;)
+
+tmap_mode(&amp;quot;plot&amp;quot;)
+hawaii_interactive&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/project/my_test_project/index_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 1: Watershed Units and Land Cover Types in Hawaii.&lt;/em&gt;&lt;/strong&gt; Data: &lt;a href=&#34;http://geoportal.hawaii.gov/datasets/watersheds&#34;&gt;Geoportal&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The interactive map above displays the layers: Watershed Units.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

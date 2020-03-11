@@ -1,0 +1,37 @@
+---
+title: "Principal Component Analysis"
+author: "Derek Nguyen"
+date: "2020-02-04"
+output: html_document
+tags:
+  - statistical
+---
+
+
+
+<div id="introduction" class="section level3">
+<h3>Introduction</h3>
+<p>Here we explore the a dataset provided by, <em><a href="https://developers.google.com/earth-engine/datasets/catalog">Google Earth Engine</a></em>, that provides various environmental and climatic data on countries throughout the world. For this particular project, variables observed are: annual mean temperature, annual mean rainfall, accessibility to cities, tree canopy cover, cloudiness, elevation, and cropland cover.</p>
+<pre class="r"><code>world_env &lt;- read_csv(here::here(&quot;csv&quot;, &quot;world_env_vars.csv&quot;))</code></pre>
+<pre class="r"><code>world_env_tidy &lt;- world_env %&gt;% 
+  clean_names() %&gt;% 
+  select(cropland_cover,
+         tree_canopy_cover, 
+         accessibility_to_cities, 
+         elevation, 
+         rain_mean_annual,
+         temp_mean_annual,
+         cloudiness) %&gt;% 
+  drop_na()</code></pre>
+<pre class="r"><code>world_env_pca &lt;- prcomp(world_env_tidy, scale = TRUE)</code></pre>
+<p><img src="/project/pca/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="summary" class="section level3">
+<h3>Summary</h3>
+<ul>
+<li>Mean annual rainfall and tree canopy cover is most positively correlated. This correlation makes sense because rainfall provides nutrients for trees and tree canopy cover would grow.</li>
+<li>Mean annual rainfall is also positively correlated with cloudiness. This seems valid because cloudy days mean higher potential for rainfall.</li>
+<li>Mean annual temperature and cropland cover are inversely correlated.</li>
+<li>Mean annual temperature and elevation are inversely correlated. This makes sense because as elevation increases, temperature goes down and vice versa.</li>
+</ul>
+</div>

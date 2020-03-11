@@ -1,0 +1,274 @@
+---
+title: "Spiny Lobster Analysis"
+author: "Derek Nguyen and Bobby Miyashiro"
+date: "2019-11-10"
+output: html_document
+tags:
+  - statistical
+  - timeseries
+---
+
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<p><br></p>
+<div id="introduction" class="section level3">
+<h3>INTRODUCTION</h3>
+<p>The California Spiny Lobster, <em>Panulirus interruptus</em>, is a decapod crustacean that has a habitat that spans from the Monterey Bay, California to Baja California, Mexico (Sea Grant California 2019). The California Spiny Lobster is one of the largest spiny lobsters in the world with males capable of growing up to three feet long and weighing up to 26 pounds. Fishing of California Spiny Lobster is regulated by the California Department of Fish and Wildlife and has an open season from October through March (California Department of Fish and Wildlife and Sea Grant California 2019).</p>
+<p>Data on California Spiny Lobsters has been collected off of the coast of Santa Barbara by the Santa Barbara Coastal Term Ecological Research (SBC LTER), an interdisciplinary program based at the University of California, Santa Barbara Marine Science Institute. SB LTER has been collecting data on size, abundance, and fishing pressure of California Spiny Lobster at five study sites along the Santa Barbara Channel since 2012. Two of the sites, Naples and Isla Vista, are within Marine Protected Areas (MPAs) and three of the sites, Arroyo Quemado, Mohawk, and Carpinteria, are otuside of MPAs (Reed D. 2019). In an effort to investigate lobster size differences or similarities between the study sites within an MPA and those outside of an MPA, this report will analyze lobster sizes between the years of 2012 and 2018 and across the five different study sites.</p>
+<p><img src="https://video-images.vice.com/_uncategorized/1487868463815-lobster-underwater-photo-by-kate-mansury_29985017702_o.jpeg?resize=1050:*" /></p>
+<p><strong><em>Figure 1: California Spiny Lobster Underwater.</em></strong> <em>California Spiny Lobster walking on the sea floor. (Credit: <a href="https://www.vice.com/en_us/article/gvk5kq/why-we-dont-eat-california-spiny-lobsters-even-though-they-taste-better">Vice</a>)</em></p>
+<p><img src="https://caseagrant.ucsd.edu/sites/default/files/i5lp9wkf-recipe-db.jpg" /></p>
+<p><strong><em>Figure 2: Cooked California Spiny Lobster.</em></strong> <em>A cooked California Spiny Lobster on a dish with butter and lemons. (Credit: <a href="https://caseagrant.ucsd.edu/seafood-profiles/spiny-lobster">Sea Grant California</a>)</em></p>
+<p><br></p>
+</div>
+<div id="data-and-methods" class="section level3">
+<h3>DATA AND METHODS</h3>
+<p>Data for Spiny Lobster abundance and location from 2012 - 2018 were collected and provided by <a href="https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-sbc&amp;identifier=77&amp;revision=newest">SBC LTER</a>. Data on California Spiny Lobster size and abundance (individuals) is collected annually by divers in the late summer before the start of the fishing season at five SBC LTER long term kelp forest study sites with two sites within MPAs: Naples and Isla Vista, and three outside of MPAs: Arroyo Quemado, Mohawk, and Carpinteria. The variables of interest and analyzed for the report were lobster abundance for each year, lobster size in millimeters, and site locations categorized within or outside of MPA’s, called MPA’s and non-MPAs, respectively. Mean lobster size distributions (mm) was compared for year 2012 vs 2018 and for site location, MPA vs non-MPA by two-sample, two-sided t-tests (α = 0.05 throughout) as well as applying cohen’s d index to evaluate effect size between groups. All analyses and figures were prepared using R Software Version 1.2.1335.</p>
+<p><br></p>
+</div>
+<div id="results" class="section level3">
+<h3>RESULTS</h3>
+<div id="a-changes-in-annual-lobster-abundance-counts-by-site" class="section level4">
+<h4>A: Changes in annual lobster abundance (counts) by site</h4>
+<pre class="r"><code>ggplot(lobster_ysite, aes(x = year, y = total_count, fill = site),
+       show.legend = FALSE) +
+  geom_col(aes(fill = MPA),
+            alpha = 0.9) +
+  facet_wrap(~site) +
+  theme_dark() +
+  scale_y_continuous(expand = c(0,0), lim = c(0,1000)) +
+  scale_x_continuous(expand = c(0,0)) +
+  labs(x = &quot;Year&quot;,
+       y = &quot;Total Lobster Observations&quot;,
+       fill = &quot;Site&quot;)</code></pre>
+<p><img src="/project/lobster/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><strong><em>Figure 4: Annual Lobster Abundance.</em></strong>
+<em>Lobster counts at the Arroyo Quemado, Carpinteria, Isla Vista, Mohawk, and Naples study sites between the years of 2012 - 2018. Data: <a href="https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0">Reed D. 2019.</a></em></p>
+<p>California Spiny Lobster abundance data was compared annually, from 2012 to 2018, across each of the five sites (Figure 4). Spiny Lobster abundance at the two sites with MPAs, Isla Vista and Naples,show an increase in Spiny Lobster abundance collected over time. This increase can be an indicator of MPA’s significant purpose in preserving California Spiny Lobster populations since these predators play an important role in maintaining ecological processes of kelp forests. California Spiny Lobster counts collected within sites outside of MPA’s are consistently low, with the exception of Carpinteria in 2017 (where total counts = 705) but then dropped significantly in 2018. This lack of protection for the non-MPA sites can be an indicator that there is a lot of influence by human activity.</p>
+</div>
+<div id="b.-lobster-size-distribution-shifts-in-2012-and-2018." class="section level4">
+<h4>B. Lobster size distribution shifts in 2012 and 2018.</h4>
+<pre class="r"><code>lobster_size &lt;- lobster_tidy %&gt;% 
+  select(year, site, size_mm) %&gt;% 
+  filter(year %in% c(2012, 2018)) %&gt;% 
+  mutate(year = as.character(year))
+  
+lobster_size$site[lobster_size$site == &quot;AQUE&quot;] &lt;- &quot;Arroyo Quemado&quot;
+lobster_size$site[lobster_size$site == &quot;CARP&quot;] &lt;- &quot;Carpinteria&quot;
+lobster_size$site[lobster_size$site == &quot;IVEE&quot;] &lt;- &quot;Isla Vista&quot;
+lobster_size$site[lobster_size$site == &quot;MOHK&quot;] &lt;- &quot;Mohawk&quot;
+lobster_size$site[lobster_size$site == &quot;NAPL&quot;] &lt;- &quot;Naples&quot;</code></pre>
+<pre class="r"><code>ggplot(data = lobster_size) +
+  geom_histogram(aes(x = size_mm, fill = site, alpha = 0.9, color = site),
+                 binwidth = 8,
+                 show.legend = FALSE) +
+  facet_grid(year~site, scales = &quot;free&quot;) +
+  theme_dark() +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_x_continuous(expand = c(0,0)) +
+  labs(x = &quot;Lobster Size (mm)&quot;,
+       y = &quot;Total Lobster Observations&quot;)</code></pre>
+<p><img src="/project/lobster/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><strong><em>Figure 5: Lobster Size Distributions Across 5 Study Sites</em></strong>
+<em>Lobster size distribution of observations across the MPA Sites: Isla Vista &amp; Naples; and non-MPA Sites: Arroyo Quemado, Carpinteria, Mohawk for the years 2012 and 2018. Data: <a href="https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0">Reed D. 2019.</a></em></p>
+<p>California Spiny Lobster counts collected are significantly higher for 2018 (n_MPA2018 = 1244, n_nonMPA = 561), than in 2012 (n_MPA = 32, n_nonMPA = 199), but both have minimum samples of over 30 observations, which is sufficient enough to compare across these groups. The proportion of size distribution for sites within MPA’s saw a comeback in larger lobster populations from 2012 to 2018, while sites outside MPA’s saw a decrease in larger lobster populations from 2012 to 2018. Smaller lobsters within MPA sites also experienced a population increase.</p>
+<p>Although Mohawk is outside of an MPA, it has a fairly symmetrical distribution of lobster size between 2012 and 2018. Mohawk may have unique physical features where human activity is not impacting the population as drammatically compared to the other sites not in MPA’s.</p>
+</div>
+<div id="c.-compare-mean-lobster-sizes-at-mpa-vs.non-mpa-sites-in-2012-and-2018." class="section level4">
+<h4>C. Compare mean lobster sizes at MPA vs. non-MPA sites in 2012 and 2018.</h4>
+<pre class="r"><code>lobster_mean_size &lt;- lobster_tidy %&gt;% 
+  mutate(mpa = case_when(
+    site %in% c(&quot;IVEE&quot;, &quot;NAPL&quot;) ~ &quot;MPA&quot;,
+    site %in% c(&quot;AQUE&quot;, &quot;MOHK&quot;, &quot;CARP&quot;) ~ &quot;non-MPA&quot;)) %&gt;% 
+  filter(year %in% c(2012, 2018)) %&gt;% 
+  select(year, site, size_mm, mpa) %&gt;% 
+  group_by(year, mpa)</code></pre>
+<pre class="r"><code>lobster_size_table &lt;- lobster_mean_size %&gt;% 
+  summarize(mean = mean(size_mm, na.rm = TRUE),
+            sd = sd(size_mm, na.rm = TRUE),
+            sample_size = n()) %&gt;% 
+  mutate_if(is.numeric, round, 1)</code></pre>
+<p><em>Null Hypothesis</em>: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are the same.</p>
+<p><em>Alternate Hypothesis</em>: The mean size, in millimeters, of lobsters collected at MPA sites vs non-MPA sites are not the same.</p>
+<p><strong><em>Table 1: Lobster Size Metrics</em></strong>
+<em>Means, Standard Deviations, and Sample Sizes of the California Spiny Lobsters for the years 2012 and 2018 between the MPA and non-MPA Sites. Data: <a href="https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0">Reed D. 2019.</a></em></p>
+<pre class="r"><code>lobster_size_table %&gt;% 
+  kable(col.names = c(&quot;Year&quot;,
+                      &quot;MPA&quot;,
+                      &quot;Mean (mm)&quot;,
+                      &quot;Standard Deviation&quot;,
+                      &quot;Sample Size&quot;)) %&gt;% 
+          kable_styling(bootstrap_options = &quot;striped&quot;,
+                        full_width = F,
+                        position = &quot;center&quot;) %&gt;% 
+          row_spec(c(1,3),
+                   color = &quot;red&quot;) %&gt;% 
+  row_spec(c(2,4),
+                   color = &quot;black&quot;)</code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Year
+</th>
+<th style="text-align:left;">
+MPA
+</th>
+<th style="text-align:right;">
+Mean (mm)
+</th>
+<th style="text-align:right;">
+Standard Deviation
+</th>
+<th style="text-align:right;">
+Sample Size
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;color: red !important;">
+2012
+</td>
+<td style="text-align:left;color: red !important;">
+MPA
+</td>
+<td style="text-align:right;color: red !important;">
+67.4
+</td>
+<td style="text-align:right;color: red !important;">
+12.2
+</td>
+<td style="text-align:right;color: red !important;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:right;color: black !important;">
+2012
+</td>
+<td style="text-align:left;color: black !important;">
+non-MPA
+</td>
+<td style="text-align:right;color: black !important;">
+74.9
+</td>
+<td style="text-align:right;color: black !important;">
+12.4
+</td>
+<td style="text-align:right;color: black !important;">
+199
+</td>
+</tr>
+<tr>
+<td style="text-align:right;color: red !important;">
+2018
+</td>
+<td style="text-align:left;color: red !important;">
+MPA
+</td>
+<td style="text-align:right;color: red !important;">
+77.6
+</td>
+<td style="text-align:right;color: red !important;">
+11.7
+</td>
+<td style="text-align:right;color: red !important;">
+1244
+</td>
+</tr>
+<tr>
+<td style="text-align:right;color: black !important;">
+2018
+</td>
+<td style="text-align:left;color: black !important;">
+non-MPA
+</td>
+<td style="text-align:right;color: black !important;">
+73.6
+</td>
+<td style="text-align:right;color: black !important;">
+10.1
+</td>
+<td style="text-align:right;color: black !important;">
+561
+</td>
+</tr>
+</tbody>
+</table>
+<p>In 2012, lobster samples collected for MPA and non-MPA sites were far smaller than the lobster samples collected in 2018.</p>
+<p>For non-MPA sites, lobster sizes decreased from 2012 to 2018 and for MPA sites, average lobster sizes increased overtime.</p>
+<p>The small sample sizes for 2012 may be a factor in why the average sizes for the sites are smaller.</p>
+<pre class="r"><code>nonmpa_2012 &lt;- lobster_mean_size %&gt;% 
+  filter(year ==&quot;2012&quot;, mpa == &quot;non-MPA&quot;) 
+nonmpa_2018 &lt;- lobster_mean_size %&gt;% 
+  filter(year == &quot;2018&quot;, mpa == &quot;non-MPA&quot;)
+mpa_2012 &lt;- lobster_mean_size %&gt;% 
+  filter(year == &quot;2012&quot;, mpa == &quot;MPA&quot;) 
+mpa_2018 &lt;- lobster_mean_size %&gt;% 
+   filter(year == &quot;2018&quot;, mpa == &quot;MPA&quot;)
+mean_mpa_2012 &lt;- mean(mpa_2012$size_mm, na.rm = TRUE) 
+mean_mpa_2018 &lt;- mean(mpa_2018$size_mm, na.rm = TRUE) 
+mean_nonmpa_2012 &lt;- mean(nonmpa_2012$size_mm, na.rm = TRUE)
+mean_nonmpa_2018 &lt;- mean(nonmpa_2018$size_mm, na.rm = TRUE)
+sd_mpa_2012 &lt;- sd(mpa_2012$size_mm, na.rm = TRUE)
+sd_mpa_2018 &lt;- sd(mpa_2018$size_mm, na.rm = TRUE)
+sd_nonmpa_2012 &lt;- sd(nonmpa_2012$size_mm, na.rm = TRUE)
+sd_nonmpa_2018 &lt;- sd(nonmpa_2018$size_mm, na.rm = TRUE)
+n_mpa_2012 &lt;- sum(!is.na(mpa_2012$size_mm))
+n_mpa_2018 &lt;- sum(!is.na(mpa_2018$size_mm))
+n_nonmpa_2012 &lt;- sum(!is.na(nonmpa_2012$size_mm))
+n_nonmpa_2018 &lt;- sum(!is.na(nonmpa_2018$size_mm))</code></pre>
+<pre class="r"><code>size_2012_ttest &lt;- t.test(mpa_2012$size_mm, nonmpa_2012$size_mm, paired = FALSE)
+# If P value is lower than alpha (0.5), which it is, we reject the null hypothesis and confirm the alternative hypothesis as it indicates strong evidence against the null hypothesis.
+size_2012_d &lt;- effsize::cohen.d(mpa_2012$size_mm, nonmpa_2012$size_mm, na.rm = TRUE)
+# Effect size is 0.61, which is a medium effect size, thus the difference can be noticed with some effort.
+size_2018_ttest &lt;- t.test(mpa_2018$size_mm, nonmpa_2018$size_mm, paired = FALSE)
+# If P value is lower than alpha (0.5), which it is, we reject the null hypothesis and confirm the alternative hypothesis as it indicates strong evidence against the null hypothesis.
+size_2018_d &lt;- effsize::cohen.d(mpa_2018$size_mm, nonmpa_2018$size_mm, na.rm = TRUE)
+# Effect size is 0.35, which is a small effect size, thus to notice the difference it would have to be studied.
+size_mpa_ttest &lt;- t.test(mpa_2012$size_mm, mpa_2018$size_mm, paired = FALSE)
+# If P value is lower than alpha (0.5), which it is, we reject the null hypothesis and confirm the alternative hypothesis as it indicates strong evidence against the null hypothesis.
+size_mpa_d &lt;- effsize::cohen.d(mpa_2012$size_mm, mpa_2018$size_mm, na.rm = TRUE)
+# Effect size is 0.87, which is a large effect size, thus the difference is easily noticeable. Cohen&#39;s D shows that the P value&#39;s rejection of the null hypothesis is easily noticeable.
+size_nonmpa_ttest &lt;- t.test(nonmpa_2012$size_mm, nonmpa_2018$size_mm, paired = FALSE)
+# If P value is lower than alpha (0.5), which it is NOT, thus we fail to reject the null hypothesis as it indicates weak evidence against the null hypothesis.
+size_nonmpa_d &lt;- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_mm, na.rm = TRUE)
+# Effect size is 0.12, which is a small effect size, thus the difference between the samples is not easily noticeable. Cohen&#39;s D confirms that the uncertainty in the rejection of the null hypothesis, as indicated by the P value, is small.</code></pre>
+<p><br></p>
+<div id="lobster-size-differences-between-mpa-and-non-mpa-sites-for-2012-only" class="section level5">
+<h5>Lobster size differences between MPA and non-MPA sites for 2012 only</h5>
+<p>The mean lobster sizes between the MPA (67.4) and non-MPA (75) sites in 2012 was 7.5 millimeters (mm). Between the MPA and non-MPA sites, the size difference is statistically significant (two-sided t-test, t(42.1) = -3.3, <em>p</em> = 0) and the effect size is moderate (Cohen’s d = -0.61). This indicates that between the MPA and non-MPA sites, the mean lobster size difference of 7.5mm is significant and moderately substantive.</p>
+</div>
+<div id="lobster-size-differences-between-mpa-and-non-mpa-sites-for-2018-only" class="section level5">
+<h5>Lobster size differences between MPA and non-MPA sites for 2018 only</h5>
+<p>The mean lobster sizes between the MPA (77.6) and non-MPA (74) sites in 2018 was 4.0 millimeters (mm). Between the MPA and non-MPA sites, the size difference is statistically significant (two-sided t-test, t(1239.5) = 7.3, <em>p</em> = 0) and the effect size is small (Cohen’s d = 0.35). This indicates that between the MPA and non-MPA sites, the mean lobster size difference of 4.0mm is significant and but not very substantive.</p>
+</div>
+<div id="mean-size-differences-in-2012-and-2018-for-mpa-sites-only" class="section level5">
+<h5>Mean size differences in 2012 and 2018 for MPA Sites only</h5>
+<p>The mean size of lobsters found within the MPA sites increased by 10.2 millimeters (mm) (from 67.4mm to 77.6mm) between 2012 and 2018. Between the two years, the size increase is statistically significant (two-sided t-test, t(32.5) = -4.7, <em>p</em> = 0) and the effect size is large (Cohen’s d = -0.87). This indicates that from 2012 to 2018, the mean lobster size increase at MPA sites of 10.2mm was significant and substantive.</p>
+</div>
+<div id="mean-size-differences-in-2012-and-2018-for-non-mpa-sites-only" class="section level5">
+<h5>Mean size differences in 2012 and 2018 for non-MPA sites only</h5>
+<p>Mean sizes of lobsters found within the three non-MPA sites decreased by 1.3mm (from 74.9 mm to 73.6mm) between 2012 and 2018. Between the two years, the size increase is not statistically significant (two-sided t-test, t(296) = 1.3, <em>p</em> = 0) and the effect size is small (Cohen’s d = 0.12) This indicates that from 2012 to 2018, the mean lobster size decrease at non-MPA sites of 1.3mm was not significant nor substantive.</p>
+<p><br></p>
+</div>
+</div>
+</div>
+<div id="summary" class="section level3">
+<h3>SUMMARY</h3>
+<ul>
+<li>Lobster populations within MPA sites increased overtime while lobster populations outside MPA sites were consistently at lower levels (Figure 4).</li>
+<li>The difference between mean sizes for lobsters within MPA sites between 2012 and 2018 was significant and substantive.</li>
+<li>There is a substantive difference in lobster sizes between MPA sites and non-MPA sites for 2012 and 2018.</li>
+</ul>
+<p><br></p>
+</div>
+<div id="references" class="section level3">
+<h3>REFERENCES</h3>
+<p><strong>California Department of Fish &amp; Wildlife and Sea Grant Foundation.</strong> California Spiny Lobster: fishing and life history information. <a href="https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=36321&amp;inline" class="uri">https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=36321&amp;inline</a>. Accessed 11/17/2019.</p>
+<p><strong>Clarissa Wei.</strong> 2016. Vice. Why We Don’t Eat California Spiny Lobsters (Even Though They Taste Better). <a href="https://www.vice.com/en_us/article/gvk5kq/why-we-dont-eat-california-spiny-lobsters-even-though-they-taste-better" class="uri">https://www.vice.com/en_us/article/gvk5kq/why-we-dont-eat-california-spiny-lobsters-even-though-they-taste-better</a>. Photo by Kate Mansury. Accessed 11/17/2019.</p>
+<p><strong>Reed D. 2019.</strong> SBC LTER: Reef: Abundance, size and fishing effort for California Spiny Lobster (Panulirus interruptus), ongoing since 2012. Environmental Data Initiative. <a href="https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0" class="uri">https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0</a>. Dataset accessed 10/30/2019.</p>
+<p><strong>Sea Grant California.</strong> California Seafood Profiles, About, Spiny Lobster: Panulirus interruptus. <a href="https://caseagrant.ucsd.edu/seafood-profiles/spiny-lobster" class="uri">https://caseagrant.ucsd.edu/seafood-profiles/spiny-lobster</a>. Accessed 11/17/2019.</p>
+</div>

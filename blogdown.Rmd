@@ -1,0 +1,31 @@
+---
+title: "Untitled"
+author: "Derek Nguyen"
+date: "3/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(blogdown)
+```
+
+```{r}
+blogdown::install_hugo()
+
+blogdown::update_hugo()
+
+```
+```{r}
+new_site(theme = "gcushen/hugo-academic",
+         sample = TRUE,
+         theme_example = TRUE,
+         empty_dirs = TRUE,
+         to_yaml = TRUE)
+```
+
+```{r}
+blogdown::serve_site()
+```
+

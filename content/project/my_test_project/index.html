@@ -1,0 +1,44 @@
+---
+title: "Watersheds of Hawaiian Islands"
+author: "Derek Nguyen"
+date: "2020-03-10"
+output: html_document
+tags:
+  - spatial
+---
+
+
+
+<pre class="r"><code>library(sf)
+library(tmap)
+library(tmaptools)
+
+library(tidyverse)
+library(here)
+library(janitor)</code></pre>
+<pre class="r"><code># land_use_cover &lt;- read_sf(dsn = here::here(&quot;csv&quot;, &quot;Land_Use_Land_Cover&quot;), 
+#                           layer = &quot;Land_Use_Land_Cover_LULC&quot;) %&gt;% 
+#   clean_names() %&gt;% 
+#   select(-objectid, -perimeter, -hawaiistgr)
+
+watersheds &lt;- read_sf(dsn = here::here(&quot;csv&quot;, &quot;Watersheds&quot;), 
+                      layer = &quot;Watersheds&quot;) %&gt;% 
+  clean_names() %&gt;% 
+  select(-objectid) %&gt;% 
+  rename(watershed_name = wuname)</code></pre>
+<pre class="r"><code>#st_crs(land_use_cover)</code></pre>
+<pre class="r"><code>hawaii_interactive &lt;-
+  tm_basemap(&quot;Esri.WorldImagery&quot;) +
+  tm_shape(watersheds) +
+  tm_fill(&quot;watershed_name&quot;, palette = c(&quot;-Blues&quot;), legend.show = FALSE) +
+  tm_borders(col = &quot;gray60&quot;, lwd = 1, lty = &quot;solid&quot;, alpha = .5) +
+  #tm_shape(land_use_cover) +
+  #tm_fill(&quot;landcover&quot;, palette = c(&quot;firebrick&quot;, &quot;green&quot;, &quot;yellow&quot;), alpha = 0.5) +
+  #tm_layout(title = &quot;Watersheds and Land Covers of Hawaii&quot;) +
+  tm_style(&quot;natural&quot;)
+
+tmap_mode(&quot;plot&quot;)
+hawaii_interactive</code></pre>
+<p><img src="/project/my_test_project/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><strong><em>Figure 1: Watershed Units and Land Cover Types in Hawaii.</em></strong> Data: <a href="http://geoportal.hawaii.gov/datasets/watersheds">Geoportal</a></p>
+<p>The interactive map above displays the layers: Watershed Units.</p>
