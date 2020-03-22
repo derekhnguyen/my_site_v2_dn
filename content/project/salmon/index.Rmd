@@ -3,6 +3,8 @@ title: "ESM 244 A2 T2"
 author: "Derek Nguyen"
 date: "2/17/2020"
 output: html_document
+tags:
+  - timeseries
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +20,7 @@ library(paletteer)
 
 
 ```{r}
-fish_passage <- read_csv("cbr_fish_passage_bonneville_allyrs_steelhead.csv") %>% 
+fish_passage <- read_csv(here::here("csv", "cbr_fish_passage_bonneville_allyrs_steelhead.csv")) %>% 
   clean_names() 
 ```
 

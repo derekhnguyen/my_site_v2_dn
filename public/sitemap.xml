@@ -43,7 +43,7 @@
   </url>
   
   <url>
-    <loc>/project/my_test_project/</loc>
+    <loc>/project/watersheds_hawaii/</loc>
     <lastmod>2020-03-10T00:00:00+00:00</lastmod>
   </url>
   
@@ -220,6 +220,10 @@
   <url>
     <loc>/publication/conference-paper/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/project/salmon/</loc>
   </url>
   
 </urlset>
