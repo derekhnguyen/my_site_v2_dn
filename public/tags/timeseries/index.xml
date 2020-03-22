@@ -301,7 +301,7 @@ size_nonmpa_d &amp;lt;- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_m
 &lt;p&gt;&lt;img src=&#34;dam.jpg&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 1: Bonneville Dam.&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;Site of Salmon Passage. (Credit: &lt;a href=&#34;http://columbiariverimages.com/Regions/Places/bonneville_dam.html&#34;&gt;The Columbia River&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;salmon.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;embed src=&#34;https://www.citarella.com/wild-steelhead-salmon.html&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 2: Steelhead Salmon.&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;Freshly filleted salmon ready for Sushi rolling. (Credit: &lt;a href=&#34;citarella.com/wild-steelhead-salmon.html&#34;&gt;Citarella&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/project/salmon/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
