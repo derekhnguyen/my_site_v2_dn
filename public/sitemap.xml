@@ -48,6 +48,16 @@
   </url>
   
   <url>
+    <loc>/project/salmon/</loc>
+    <lastmod>2020-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/timeseries/</loc>
+    <lastmod>2020-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/project/pca/</loc>
     <lastmod>2020-02-04T00:00:00+00:00</lastmod>
   </url>
@@ -64,11 +74,6 @@
   
   <url>
     <loc>/project/lobster/</loc>
-    <lastmod>2019-11-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/timeseries/</loc>
     <lastmod>2019-11-10T00:00:00+00:00</lastmod>
   </url>
   
@@ -220,10 +225,6 @@
   <url>
     <loc>/publication/conference-paper/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/project/salmon/</loc>
   </url>
   
 </urlset>

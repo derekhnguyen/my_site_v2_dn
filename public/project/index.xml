@@ -57,6 +57,40 @@ hawaii_interactive&lt;/code&gt;&lt;/pre&gt;
     </item>
     
     <item>
+      <title>Steelhead Salmon Passage</title>
+      <link>/project/salmon/</link>
+      <pubDate>Mon, 17 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>/project/salmon/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;For this project, Steelhead Salmon counts were recorded during time of passage across the Bonneville Dam. The impacts of the Bonneville Dam construction on salmon populations were evident during the early decades after the construciton. Daily, monthly, and average annual counts were recorded from 1939 - 2019. Data is provided by (Credit: &lt;a href=&#34;http://www.cbr.washington.edu/dart/query/adult_graph_text&#34;&gt;Columbia Basin Research&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;embed src=&#34;http://columbiariverimages.com/Regions/Places/bonneville_dam.html&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 1: Bonneville Dam.&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;Site of Salmon Passage. (Credit: &lt;a href=&#34;http://columbiariverimages.com/Regions/Places/bonneville_dam.html&#34;&gt;The Columbia River&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;embed src=&#34;https://www.citarella.com/wild-steelhead-salmon.html&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 2: Steelhead Salmon.&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;Freshly filleted salmon ready for Sushi rolling. (Credit: &lt;a href=&#34;citarella.com/wild-steelhead-salmon.html&#34;&gt;Citarella&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/project/salmon/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 3: Daily Steelhead Salmon Counts from 1939 - 2019.&lt;/em&gt;&lt;/strong&gt; Data: &lt;a href=&#34;http://www.cbr.washington.edu/dart/query/adult_graph_text&#34;&gt;Columbia Basin Research&lt;/a&gt;*&lt;/p&gt;
+&lt;p&gt;The years immediately following the construction of the Bonneville Dam, Steelhead Salmon counts were very low. Overall, there is a lot of fluctuation in total counts but after 2000, daily counts of Steelhead Salmon show the highest increase in total counts.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/project/salmon/index_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 4: Seasonplot of Steelhead Salmon.&lt;/em&gt;&lt;/strong&gt; Data: &lt;a href=&#34;http://www.cbr.washington.edu/dart/query/adult_graph_text&#34;&gt;Columbia Basin Research&lt;/a&gt;*&lt;/p&gt;
+&lt;p&gt;The number of Steelhead Salmon are highest during the summer and fall months and as the years go by, overall counts also increase. These months where we see the highest amount of counts recorded during passage could indicate when the salmon are migrating. Overtime, Steelhead Salmon populations are increasing, indicating that numbers of salmon are returning back to typical populations.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/project/salmon/index_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 5: Annual Average Steelhead Count.&lt;/em&gt;&lt;/strong&gt; Data: &lt;a href=&#34;http://www.cbr.washington.edu/dart/query/adult_graph_text&#34;&gt;Columbia Basin Research&lt;/a&gt;*&lt;/p&gt;
+&lt;p&gt;This graph shows that annual Steelhead Salmon counts are increasing once the Bonneville Dam installed the fish ladders for the salmon to pass. However, after 2000, the trend begins to decrease. This is significant because the graph shows that the installation of the fish ladders provide a huge ecosystem benefit for salmon which is to help them migrate through for reproduction.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Principal Component Analysis</title>
       <link>/project/pca/</link>
       <pubDate>Tue, 04 Feb 2020 00:00:00 +0000</pubDate>
@@ -616,40 +650,6 @@ size_nonmpa_d &amp;lt;- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_m
 &lt;p&gt;&lt;strong&gt;Clarissa Wei.&lt;/strong&gt; 2016. Vice. Why We Don’t Eat California Spiny Lobsters (Even Though They Taste Better). &lt;a href=&#34;https://www.vice.com/en_us/article/gvk5kq/why-we-dont-eat-california-spiny-lobsters-even-though-they-taste-better&#34; class=&#34;uri&#34;&gt;https://www.vice.com/en_us/article/gvk5kq/why-we-dont-eat-california-spiny-lobsters-even-though-they-taste-better&lt;/a&gt;. Photo by Kate Mansury. Accessed 11/17/2019.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Reed D. 2019.&lt;/strong&gt; SBC LTER: Reef: Abundance, size and fishing effort for California Spiny Lobster (Panulirus interruptus), ongoing since 2012. Environmental Data Initiative. &lt;a href=&#34;https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0&#34; class=&#34;uri&#34;&gt;https://doi.org/10.6073/pasta/a593a675d644fdefb736750b291579a0&lt;/a&gt;. Dataset accessed 10/30/2019.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Sea Grant California.&lt;/strong&gt; California Seafood Profiles, About, Spiny Lobster: Panulirus interruptus. &lt;a href=&#34;https://caseagrant.ucsd.edu/seafood-profiles/spiny-lobster&#34; class=&#34;uri&#34;&gt;https://caseagrant.ucsd.edu/seafood-profiles/spiny-lobster&lt;/a&gt;. Accessed 11/17/2019.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>ESM 244 A2 T2</title>
-      <link>/project/salmon/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>/project/salmon/</guid>
-      <description>
-
-
-&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Introduction&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;For this project, Steelhead Salmon counts were recorded during time of passage across the Bonneville Dam. The impacts of the Bonneville Dam construction on salmon populations were evident during the early decades after the construciton. Daily, monthly, and average annual counts were recorded from 1939 - 2019. Data is provided by (Credit: &lt;a href=&#34;http://www.cbr.washington.edu/dart/query/adult_graph_text&#34;&gt;Columbia Basin Research&lt;/a&gt;).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;embed src=&#34;http://columbiariverimages.com/Regions/Places/bonneville_dam.html&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 1: Bonneville Dam.&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;Site of Salmon Passage. (Credit: &lt;a href=&#34;http://columbiariverimages.com/Regions/Places/bonneville_dam.html&#34;&gt;The Columbia River&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;embed src=&#34;https://www.citarella.com/wild-steelhead-salmon.html&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 2: Steelhead Salmon.&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;Freshly filleted salmon ready for Sushi rolling. (Credit: &lt;a href=&#34;citarella.com/wild-steelhead-salmon.html&#34;&gt;Citarella&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/project/salmon/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 3: Daily Steelhead Salmon Counts from 1939 - 2019.&lt;/em&gt;&lt;/strong&gt; Data: &lt;a href=&#34;http://www.cbr.washington.edu/dart/query/adult_graph_text&#34;&gt;Columbia Basin Research&lt;/a&gt;*&lt;/p&gt;
-&lt;p&gt;The years immediately following the construction of the Bonneville Dam, Steelhead Salmon counts were very low. Overall, there is a lot of fluctuation in total counts but after 2000, daily counts of Steelhead Salmon show the highest increase in total counts.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/project/salmon/index_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 4: Seasonplot of Steelhead Salmon.&lt;/em&gt;&lt;/strong&gt; Data: &lt;a href=&#34;http://www.cbr.washington.edu/dart/query/adult_graph_text&#34;&gt;Columbia Basin Research&lt;/a&gt;*&lt;/p&gt;
-&lt;p&gt;The number of Steelhead Salmon are highest during the summer and fall months and as the years go by, overall counts also increase. These months where we see the highest amount of counts recorded during passage could indicate when the salmon are migrating. Overtime, Steelhead Salmon populations are increasing, indicating that numbers of salmon are returning back to typical populations.&lt;/p&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/project/salmon/index_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 5: Annual Average Steelhead Count.&lt;/em&gt;&lt;/strong&gt; Data: &lt;a href=&#34;http://www.cbr.washington.edu/dart/query/adult_graph_text&#34;&gt;Columbia Basin Research&lt;/a&gt;*&lt;/p&gt;
-&lt;p&gt;This graph shows that annual Steelhead Salmon counts are increasing once the Bonneville Dam installed the fish ladders for the salmon to pass. However, after 2000, the trend begins to decrease. This is significant because the graph shows that the installation of the fish ladders provide a huge ecosystem benefit for salmon which is to help them migrate through for reproduction.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

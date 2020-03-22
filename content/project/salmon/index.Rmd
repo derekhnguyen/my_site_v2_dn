@@ -1,7 +1,7 @@
 ---
-title: "ESM 244 A2 T2"
+title: "Steelhead Salmon Passage"
 author: "Derek Nguyen"
-date: "2/17/2020"
+date: "2020-02-17"
 output: html_document
 tags:
   - timeseries
