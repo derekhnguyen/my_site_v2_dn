@@ -26,7 +26,7 @@ date_format = "Jan 2006"
   certificate_url = "https://www.coursera.org"
   date_start = "2004-10-01"
   date_end = ""
-  description = "MMA, Jiu-Jitsu, Vietnamese Kung-Fu"
+  description = "Mixed Martial Arts, Jiu-Jitsu, Vietnamese Kung-Fu"
 
 
 
