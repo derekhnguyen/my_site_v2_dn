@@ -21,7 +21,7 @@
 [[main]]
   name = "Skills"
   url = "#skills"
-  weight = 10
+  weight = 5
 
 #[[main]]
 #  name = "Publications"
