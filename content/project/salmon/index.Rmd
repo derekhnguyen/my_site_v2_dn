@@ -1,0 +1,166 @@
+---
+title: "ESM 244 A2 T2"
+author: "Derek Nguyen"
+date: "2/17/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.align= 'center')
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(here)
+library(paletteer)
+
+
+```
+
+
+```{r}
+fish_passage <- read_csv("cbr_fish_passage_bonneville_allyrs_steelhead.csv") %>% 
+  clean_names() 
+```
+
+### Introduction 
+- For this project, Steelhead Salmon counts were recorded during time of passage across the Bonneville Dam. The impacts of the Bonneville Dam construction on salmon populations were evident during the early decades after the construciton. Daily, monthly, and average annual counts were recorded from 1939 - 2019. Data is provided by (Credit: [Columbia Basin Research](http://www.cbr.washington.edu/dart/query/adult_graph_text)). 
+
+
+
+
+![](dam.jpg)
+
+***Figure 1: Bonneville Dam.*** *Site of Salmon Passage. (Credit: [The Columbia River](http://columbiariverimages.com/Regions/Places/bonneville_dam.html)*
+
+
+
+<br>
+
+![](salmon.jpg)
+
+***Figure 2: Steelhead Salmon.*** *Freshly filleted salmon ready for Sushi rolling. (Credit: [Citarella](citarella.com/wild-steelhead-salmon.html)*
+
+<br>
+
+
+```{r}
+salmon_date <- fish_passage %>% 
+  unite("salmon_date", year:mm_dd, sep = "-", remove = FALSE, na.rm = TRUE) %>% 
+  mutate(yr_mo_day = lubridate::parse_date_time(salmon_date, "ydm")) %>% 
+  mutate(month_sep = ydm(yr_mo_day)) %>% 
+  mutate(value = as.numeric(value)) %>% 
+  drop_na(month_sep, value)
+
+ggplot(data = salmon_date, aes(x = month_sep, y = value)) +
+  geom_line() +
+  theme_minimal() +
+  labs(x = "",
+       y = "Total Salmon Counts",
+       title = "Daily Salmon Counts (NGUYEN)",
+       caption = "from 1939 - 2019") +
+  scale_y_continuous(expand = c(0,0)) 
+```
+
+***Figure 3: Daily Steelhead Salmon Counts from 1939 - 2019.*** Data: [Columbia Basin Research](
+http://www.cbr.washington.edu/dart/query/adult_graph_text)*
+
+The years immediately following the construction of the Bonneville Dam, Steelhead Salmon counts were very low. Overall, there is a lot of fluctuation in total counts but after 2000, daily counts of Steelhead Salmon show the highest increase in total counts.
+
+
+<br>
+
+
+```{r}
+
+renew_parsed <- salmon_date %>% 
+  mutate(month = month(yr_mo_day, label = TRUE)) %>% 
+  mutate(year = year(yr_mo_day)) %>% 
+  group_by(year, month) %>% 
+  summarize(value_sum = sum(value))
+
+```
+
+```{r}
+ggplot(data = renew_parsed, aes(x = month, y = value_sum, group = year)) +
+  geom_line(aes(color = year)) +
+  theme_dark() +
+  labs(title = "Seasonplot of Observed Salmon Counts for Each Month (NGUYEN)",
+       y = "# of Salmon Counts",
+       x = "") +
+  scale_y_continuous(expand = c(0,0)) +
+  scale_color_gradientn(colors = c("green", "yellow", "firebrick"))
+
+```
+
+***Figure 4: Seasonplot of Steelhead Salmon.*** Data: [Columbia Basin Research](
+http://www.cbr.washington.edu/dart/query/adult_graph_text)*
+
+The number of Steelhead Salmon are highest during the summer and fall months and as the years go by, overall counts also increase. These months where we see the highest amount of counts recorded during passage could indicate when the salmon are migrating. Overtime, Steelhead Salmon populations are increasing, indicating that numbers of salmon are returning back to typical populations. 
+
+
+<br>
+
+
+```{r}
+salmon_annual <- salmon_date %>% 
+ group_by(year) %>%
+  summarize(annual = mean(value))
+
+ggplot(data = salmon_annual, aes(x= year, y = annual  )) +
+  geom_line(color = "firebrick") +
+  geom_smooth(color = "blue",
+              size = 0.5,
+              linetype = "dashed",
+              fill = "grey",
+              alpha= 0.5) +
+  labs(x = "",
+       y = "Average Annual Salmon Counts",
+       title = "Annual Average of Steelhead Salmon (NGUYEN)") +
+  scale_x_continuous(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0))
+  
+```
+
+***Figure 5: Annual Average Steelhead Count.*** Data: [Columbia Basin Research](
+http://www.cbr.washington.edu/dart/query/adult_graph_text)*
+
+This graph shows that annual Steelhead Salmon counts are increasing once the Bonneville Dam installed the fish ladders for the salmon to pass. However, after 2000, the trend begins to decrease. This is significant because the graph shows that the installation of the fish ladders provide a huge ecosystem benefit for salmon which is to help them migrate through for reproduction. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
