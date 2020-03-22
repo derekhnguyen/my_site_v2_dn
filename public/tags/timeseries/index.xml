@@ -298,7 +298,7 @@ size_nonmpa_d &amp;lt;- effsize::cohen.d(nonmpa_2012$size_mm, nonmpa_2018$size_m
 &lt;ul&gt;
 &lt;li&gt;For this project, Steelhead Salmon counts were recorded during time of passage across the Bonneville Dam. The impacts of the Bonneville Dam construction on salmon populations were evident during the early decades after the construciton. Daily, monthly, and average annual counts were recorded from 1939 - 2019. Data is provided by (Credit: &lt;a href=&#34;http://www.cbr.washington.edu/dart/query/adult_graph_text&#34;&gt;Columbia Basin Research&lt;/a&gt;).&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;dam.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;embed src=&#34;http://columbiariverimages.com/Regions/Places/bonneville_dam.html&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Figure 1: Bonneville Dam.&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;Site of Salmon Passage. (Credit: &lt;a href=&#34;http://columbiariverimages.com/Regions/Places/bonneville_dam.html&#34;&gt;The Columbia River&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;&lt;embed src=&#34;https://www.citarella.com/wild-steelhead-salmon.html&#34; /&gt;&lt;/p&gt;

@@ -30,7 +30,7 @@ fish_passage <- read_csv(here::here("csv", "cbr_fish_passage_bonneville_allyrs_s
 
 
 
-![](dam.jpg)
+![](http://columbiariverimages.com/Regions/Places/bonneville_dam.html)
 
 ***Figure 1: Bonneville Dam.*** *Site of Salmon Passage. (Credit: [The Columbia River](http://columbiariverimages.com/Regions/Places/bonneville_dam.html)*
 
